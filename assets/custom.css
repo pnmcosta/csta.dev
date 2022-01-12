@@ -1,0 +1,13 @@
+.hero-foot{ display: none; }
+
+  @media screen and (max-width: 768px){
+    .subtitle.is-3 {
+        font-size: 1.5rem;
+    }
+  }
+
+  @media screen and (min-width: 960px){
+    body, html {
+        overflow: hidden; /* Hide scrollbars */
+      }
+  }

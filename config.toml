@@ -39,7 +39,7 @@ DefaultContentLanguage           = "en"                    # Default language fo
     # Icon pack "fab" includes social network icons, see: https://fontawesome.com/icons?d=gallery&s=brands&m=free
     # Icon pack "fas" includes solid style icons, see: https://fontawesome.com/icons?d=gallery&s=solid&m=free
     [[params.social]]
-        url   = "/cv-pedro-costa.pdf"
+        url   = "/Pedro-Maia-Costa.pdf"
         icon  = "user-circle" # icon name without the 'fa-'
         icon_pack = "fas"
         html_attributes = "title=\"Download Resume\" target=\"_blank\"" 
@@ -84,5 +84,5 @@ DefaultContentLanguage           = "en"                    # Default language fo
         weight           = 0
         title            = "Pedro Costa"
         [languages.en.params]
-            description  = "The homepage of Pedro Costa a software engineer and problem solver. You&rsquo;ll find my resume, social links and projects."   # Max 160 characters show in search results
+            description  = "The homepage of Pedro Costa, senior software engineer and architect. You&rsquo;ll find my resume, social links and projects."   # Max 160 characters show in search results
             footerText   = "Under construction, additional content brewing..."                      # Text to override default footer text (markdown allowed)

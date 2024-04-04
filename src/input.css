@@ -21,6 +21,10 @@
         padding-bottom: 2px;
     }
 
+    #title {
+        margin-left: -6px;
+    }
+
     #title span {
         transition: all .5s ease-in-out 0s;
         opacity: 0;

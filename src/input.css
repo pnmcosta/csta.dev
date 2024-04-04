@@ -2,14 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-
-
 @layer base {
-
     html {
         font-size: 24px
     }
-    
+
     h1,
     a {
         @apply text-white;
@@ -17,5 +14,24 @@
 
     a:hover {
         @apply text-zinc-400;
+    }
+
+    h1 {
+        overflow: hidden;
+        padding-bottom: 2px;
+    }
+
+    #title span {
+        transition: all .5s ease-in-out 0s;
+        opacity: 0;
+        width: 0;
+        height: 0;
+        display: block;
+    }
+
+    #title span.visible {
+        opacity: 1;
+        width: auto;
+        height: auto;
     }
 }

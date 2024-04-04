@@ -3,8 +3,7 @@ name: github pages
 on:
   push:
     branches:
-      - main  # Set a branch to deploy
-  pull_request:
+      - main
 
 jobs:
   deploy:
@@ -17,7 +16,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           check-latest: true
-          node-version: 20.8.1
+          node-version: 20.11.1
           cache: npm
           cache-dependency-path: |
             package-lock.json

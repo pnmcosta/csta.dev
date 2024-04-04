@@ -5,40 +5,66 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="./output.css" rel="stylesheet">
-    <title>Csta</title>
+    <title>csta.dev</title>
     <link rel="icon" type="image/png" href="favicon.png" />
 
-    <meta name="description" content="I'm Pedro Costa, a product software engineer based in Braga, Portugal" />
+    <meta name="description" content="I'm Pedro Maia Costa, a product software engineer based in Braga, Portugal" />
 
     <!-- Twitter Card data -->
-    <meta name="twitter:card" value="I'm Pedro Costa, a product software engineer based in Braga, Portugal">
+    <meta name="twitter:card" value="I'm Pedro Maia Costa, a product software engineer based in Braga, Portugal">
 
     <!-- Open Graph data -->
-    <meta property="og:title" content="I'm Pedro Costa, a product software engineer" />
+    <meta property="og:title" content="I'm Pedro Maia Costa, a product software engineer" />
     <meta property="og:type" content="article" />
     <meta property="og:url" content="https://www.csta.dev/" />
     <meta property="og:image" content="/ogimg.png" />
-    <meta property="og:description" content="I'm Pedro Costa, product software engineer based in Braga, Portugal" />
+    <meta property="og:description" content="I'm Pedro Maia Costa, product software engineer based in Braga, Portugal" />
 </head>
 
-<body class="bg-black text-stone-300 font-mono">
-    <div class="container lg:w-3/5 xl:w-1/2 space-y-3 px-3 mt-3">
-        <h1 class="text-6xl font-bold">
-            Csta
+<body class="bg-black text-stone-300 font-mono ">
+    <div class="container md:w-2/3 lg:w-3/5 xl:w-1/2 space-y-3 px-3 mt-3">
+        <h1 class="text-6xl font-bold text-nowrap" id="title">
+            <span class="visible">csta.dev</span>
+            <span>&lt;csta&#x2F;&gt;</span>
+            <span>&amp;csta{}</span>
+            <span>#csta</span>
+            <span>()=>csta</span>
         </h1>
-        <p>Olá, I'm <a href="https://www.linkedin.com/in/pnmcosta/" target="_blank">Pedro Costa</a>, a product software
-            engineer based in Braga, Portugal</p>
+        <p>Olá, I'm <a href="https://www.linkedin.com/in/pnmcosta/" target="_blank">Pedro Maia Costa</a> a product software
+            engineer based in Braga, Portugal.</p>
 
-        <p>Currently working on/with <a href="https://www.socialclique.app/" target="_blank">SocialClique</a></p>
+        <p>Currently working on/with <a href="https://www.socialclique.app/" target="_blank">SocialClique</a> developing <a href="https://shopify.dev/building-for-the-app-store" targe="_blank">Shopify Apps</a>.</p>
 
         <p>Having previously worked at/with <a href="https://www.juni.co/" target="_blank">Juni</a>, <a
-                href="https://www.thesimgrid.com/" target="_blank">The SimGrid</a>, <a href="http://www.jpmorganchase.com" target="_blank">JPMorgan
-                Chase & Co.</a> and <a href="https://allhuman.com/" target="_blank">All human</a></p>
+                href="https://www.thesimgrid.com/" target="_blank">The SimGrid</a>, <a
+                href="http://www.jpmorganchase.com" target="_blank">JPMorgan
+                Chase & Co.</a> and <a href="https://allhuman.com/" target="_blank">All human</a>.</p>
 
-        <p>Drop me a line: <a href="mailto:pedro@csta.dev">pedro@csta.dev</a></p>
-        
+        <p>Drop me a line to <a href="mailto:&#112;&#101;&#100;&#114;&#111;&#064;&#099;&#115;&#116;&#097;&#046;&#100;&#101;&#118;">&#112;&#101;&#100;&#114;&#111;&#064;&#099;&#115;&#116;&#097;&#046;&#100;&#101;&#118;</a></p>
+
         <p>All the best</p>
     </div>
+    <script>
+        const options = document.querySelectorAll("#title > span")
+        const visibleEl = document.querySelector("#title > span.visible")
+        let visible = Array.prototype.indexOf.call(visibleEl.parentNode.children, visibleEl);
+        setInterval(() => {
+            if (visible < options.length - 1) {
+                visible++;
+            } else {
+                visible = 0
+            }
+
+            for (let i = 0; i < options.length; i++) {
+                if (visible === i) {
+                    options[i].classList.add("visible")
+                    document.title = options[i].textContent
+                } else {
+                    options[i].classList.remove("visible")
+                }
+            }
+        }, 10000) // every 10s
+    </script>
 </body>
 
 </html>

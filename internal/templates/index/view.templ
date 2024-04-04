@@ -1,0 +1,50 @@
+package index
+
+import "github.com/pnmcosta/csta.dev/internal/posts"
+import "github.com/pnmcosta/csta.dev/internal/templates/layout"
+import "path"
+import "github.com/gosimple/slug"
+
+templ View(posts []posts.Post) {
+	@layout.Base() {
+		<p>
+			Olá, I'm <a href="https://www.linkedin.com/in/pnmcosta/" target="_blank">Pedro Maia Costa</a> a product
+			software
+			engineer based in Braga, Portugal.
+		</p>
+		<p>
+			Currently working on/with <a href="https://www.socialclique.app/" target="_blank">SocialClique</a> developing
+			<a href="https://shopify.dev/building-for-the-app-store" target="_blank">Shopify Apps</a>.
+		</p>
+		<p>
+			Having previously worked at/with <a href="https://www.juni.co/" target="_blank">Juni</a>, <a
+	href="https://www.thesimgrid.com/"
+	target="_blank"
+>The SimGrid</a>, 
+			<a
+				href="http://www.jpmorganchase.com"
+				target="_blank"
+			>
+				JPMorgan
+				Chase & Co.
+			</a> and <a href="https://allhuman.com/" target="_blank">All human</a>.
+		</p>
+		if len(posts) > 0 {
+			<p>I've also recently started sharing my experience and know-how on these blog articles:</p>
+			<p>
+				for i, post := range posts {
+					if i >0 {
+						;
+					}
+					<a href={ templ.SafeURL(path.Join(post.Date.Format("2006/01/02"), slug.Make(post.Title), "/")) }>{ post.Title } ({ post.Date.Format("2006/01/02") })</a>
+				}
+			</p>
+		}
+		<p>
+			Drop me a comment to <a
+	href="mailto:pedro@csta.dev"
+>&#112;&#101;&#100;&#114;&#111;&#064;&#099;&#115;&#116;&#097;&#046;&#100;&#101;&#118;</a>
+		</p>
+		<p>All the best</p>
+	}
+}

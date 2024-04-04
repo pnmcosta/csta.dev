@@ -1,0 +1,66 @@
+package layout
+
+templ Base() {
+	<!DOCTYPE html>
+	<html>
+		<head>
+			<meta charset="UTF-8"/>
+			<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+			<link href="/style.css" rel="stylesheet"/>
+			<title>csta.dev</title>
+			<link rel="icon" type="image/png" href="/favicon.png"/>
+			<meta name="description" content="I'm Pedro Maia Costa, a product software engineer based in Braga, Portugal"/>
+			<!-- Twitter Card data -->
+			<meta name="twitter:card" value="I'm Pedro Maia Costa, a product software engineer based in Braga, Portugal"/>
+			<!-- Open Graph data -->
+			<meta property="og:title" content="I'm Pedro Maia Costa, a product software engineer"/>
+			<meta property="og:type" content="article"/>
+			<meta property="og:url" content="https://csta.dev/"/>
+			<meta property="og:image" content="/ogimg.png"/>
+			<meta
+				property="og:description"
+				content="I'm Pedro Maia Costa, product software engineer based in Braga, Portugal"
+			/>
+		</head>
+		<body class="bg-black font-mono">
+			<div class="container md:w-2/3 lg:w-3/5 xl:w-1/2 space-y-3 px-4 sm:px-6 lg:px-8 mt-4 sm:mt-6 lg:mt-8 text-lg sm:text-xl lg:text-2xl text-stone-300">
+				<h1 class="text-5xl sm:text-6xl lg:text-8xl pb-4 sm:pb-6 lg:pb-8 font-bold text-nowrap" id="title">
+					<a href="/">
+						<span class="visible">csta.dev</span>
+						<span>&lt;csta&#x2F;&gt;</span>
+						<span>&amp;csta{  }</span>
+						<span>#csta</span>
+						<span>()=>csta</span>
+					</a>
+				</h1>
+				{ children... }
+			</div>
+			<div class="clouds">
+				<div class="clouds-1"></div>
+				<div class="clouds-2"></div>
+				<div class="clouds-3"></div>
+			</div>
+			<script>
+				const titleEls = document.querySelectorAll("#title > a > span")
+				const visibleEl = document.querySelector("#title > a > span.visible")
+				let visible = Array.prototype.indexOf.call(visibleEl.parentNode.children, visibleEl);
+				setInterval(() => {
+					if (visible < titleEls.length - 1) {
+						visible++;
+					} else {
+						visible = 0
+					}
+
+					for (let i = 0; i < titleEls.length; i++) {
+						if (visible === i) {
+							titleEls[i].classList.add("visible")
+							document.title = titleEls[i].textContent
+						} else {
+							titleEls[i].classList.remove("visible")
+						}
+					}
+				}, 10000) // every 10s
+			</script>
+		</body>
+	</html>
+}

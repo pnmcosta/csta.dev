@@ -1,0 +1,114 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+
+    html {
+        height: 100%;
+        position:relative;
+    }
+
+    body {
+        background: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuNSIgeTE9IjAuMCIgeDI9IjAuNSIgeTI9IjEuMCI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzAwMDAwMCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzExMTExMSIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
+        background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #000000), color-stop(100%, #111111));
+        background: -moz-linear-gradient(#000000, #111111);
+        background: -webkit-linear-gradient(#000000, #111111);
+        background: linear-gradient(#000000, #111111);
+    }
+
+    h1,
+    a {
+        @apply text-white;
+        transition: color .2s ease-in-out 0s;
+    }
+
+    a:hover {
+        @apply text-zinc-400;
+    }
+
+    h1 {
+        overflow: hidden;
+        padding-bottom: 2px;
+    }
+
+    #title {
+        margin-left: -6px;
+    }
+
+    #title span {
+        transition: opacity .5s ease-in-out .5s;
+        opacity: 0;
+        width: 0;
+        height: 0;
+        display: block;
+    }
+
+    #title span.visible {
+        opacity: 1;
+        width: auto;
+        height: auto;
+    }
+
+
+    /*** https://codepen.io/vavik96/pen/vEdMXM ***/
+    @keyframes clouds-loop-1 {
+        to {
+            background-position: -1000px 0;
+        }
+    }
+
+    .clouds-1 {
+        background-image: url("/clouds_2.webp");
+        animation: clouds-loop-1 1500s infinite linear;
+    }
+
+    @keyframes clouds-loop-2 {
+        to {
+            background-position: -1000px 0;
+        }
+    }
+
+    .clouds-2 {
+        background-image: url("/clouds_1.webp");
+        animation: clouds-loop-2 750s infinite linear;
+    }
+
+    @keyframes clouds-loop-3 {
+        to {
+            background-position: -1579px 0;
+        }
+    }
+
+    .clouds-3 {
+        background-image: url("/clouds_3.png");
+        animation: clouds-loop-3 900s infinite linear;
+    }
+
+    .clouds {
+        filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=40);
+        opacity: 0.4;
+        pointer-events: none;
+        position: absolute;
+        overflow: hidden;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 100%;
+        z-index: -1;
+    }
+
+    .clouds-1,
+    .clouds-2,
+    .clouds-3 {
+        background-repeat: repeat-x;
+        background-position: center;
+        position: absolute;
+        bottom: -200px;
+        right: 0;
+        left: 0;
+        height: 500px;
+        transform: scale(1, -1);
+    }
+
+}

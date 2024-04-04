@@ -59,7 +59,7 @@
     }
 
     .clouds-1 {
-        background-image: url("https://s.cdpn.io/15514/clouds_2.png");
+        background-image: url("/clouds_2.webp");
         animation: clouds-loop-1 1500s infinite linear;
     }
 
@@ -70,7 +70,7 @@
     }
 
     .clouds-2 {
-        background-image: url("https://s.cdpn.io/15514/clouds_1.png");
+        background-image: url("/clouds_1.webp");
         animation: clouds-loop-2 750s infinite linear;
     }
 
@@ -81,7 +81,7 @@
     }
 
     .clouds-3 {
-        background-image: url("https://s.cdpn.io/15514/clouds_3.png");
+        background-image: url("/clouds_3.png");
         animation: clouds-loop-3 900s infinite linear;
     }
 
@@ -102,8 +102,9 @@
     .clouds-2,
     .clouds-3 {
         background-repeat: repeat-x;
+        background-position: center;
         position: absolute;
-        bottom: -250px;
+        bottom: -200px;
         right: 0;
         left: 0;
         height: 500px;

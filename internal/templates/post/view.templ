@@ -1,0 +1,14 @@
+package post
+
+import "github.com/pnmcosta/csta.dev/internal/posts"
+import "github.com/pnmcosta/csta.dev/internal/templates/layout"
+
+templ View(post posts.Post, content templ.Component) {
+	@layout.Base() {
+		<div class="content">
+			@content
+		</div>
+	}
+	// <p>{ post.Summary }</p>
+	// <p>{ strings.Join(post.Tags, ", ") }</p>
+}

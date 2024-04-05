@@ -3,6 +3,12 @@ package index
 import "github.com/pnmcosta/csta.dev/internal/posts"
 import "github.com/pnmcosta/csta.dev/internal/templates/layout"
 import "github.com/pnmcosta/csta.dev/internal/templates/post"
+import "fmt"
+
+var (
+	mail = "&#112;&#101;&#100;&#114;&#111;&#064;&#099;&#115;&#116;&#097;&#046;&#100;&#101;&#118;"
+	mailLink = fmt.Sprintf(`<a href="mailto:%s">%s</a>`, mail, mail)
+)
 
 templ View(posts []*posts.Post, tags []string) {
 	@layout.Base() {
@@ -40,9 +46,8 @@ templ View(posts []*posts.Post, tags []string) {
 			</p>
 		}
 		<p>
-			Drop me a comment to <a
-	href="mailto:pedro@csta.dev"
->&#112;&#101;&#100;&#114;&#111;&#064;&#099;&#115;&#116;&#097;&#046;&#100;&#101;&#118;</a>
+			Source code of this site on <a href="https://github.com/pnmcosta/csta.dev" target="_blank">GitHub</a> and you can drop me a comment to 
+			@post.Unsafe(mailLink)
 		</p>
 		<p>All the best</p>
 	}

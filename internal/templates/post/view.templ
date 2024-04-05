@@ -3,7 +3,7 @@ package post
 import "github.com/pnmcosta/csta.dev/internal/posts"
 import "github.com/pnmcosta/csta.dev/internal/templates/layout"
 
-templ View(post posts.Post, content templ.Component) {
+templ View(post *posts.Post, content templ.Component) {
 	@layout.Base() {
 		<div class="content">
 			@content

@@ -24,10 +24,10 @@ type Post struct {
 }
 
 type walker struct {
-	posts []Post
+	posts []*Post
 }
 
-func ParsePosts() []Post {
+func ParsePosts() []*Post {
 	w := walker{}
 	filepath.WalkDir("./posts", w.walk)
 	// stort by latest
@@ -115,7 +115,7 @@ func (w *walker) walk(s string, d fs.DirEntry, err error) error {
 		}
 
 		log.Printf("%s: post parsed\n", s)
-		w.posts = append(w.posts, post)
+		w.posts = append(w.posts, &post)
 	}
 	return nil
 }

@@ -4,7 +4,7 @@ import "github.com/pnmcosta/csta.dev/internal/posts"
 import "github.com/pnmcosta/csta.dev/internal/templates/layout"
 import "github.com/pnmcosta/csta.dev/internal/templates/post"
 
-templ View(tag string, posts []posts.Post) {
+templ View(tag string, posts []*posts.Post) {
 	@layout.Base() {
 		if len(posts) > 0 {
 			<h1>{ tag } Posts</h1>

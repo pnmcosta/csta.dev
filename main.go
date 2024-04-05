@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"os"
 	"path"
+	"sync"
 
 	"github.com/gosimple/slug"
 	"github.com/pnmcosta/csta.dev/internal/posts"
@@ -26,73 +27,88 @@ func main() {
 
 	// Output path.
 	rootPath := "public"
-	if err := os.Mkdir(rootPath, 0755); err != nil && !os.IsExist(err) {
+	if err := os.Mkdir(rootPath, 0755); err != nil && os.IsNotExist(err) {
 		log.Fatalf("failed to create output directory: %v", err)
 	}
 
-	tags := map[string][]Post{}
+	tags := map[string][]*Post{}
 
+	var wg sync.WaitGroup
+	wg.Add(len(posts))
 	// Create a page for each post.
 	for _, post := range posts {
-		// Create the output directory.
-		dir := path.Join(rootPath, post.Date.Format("2006/01/02"), slug.Make(post.Title))
-		if err := os.MkdirAll(dir, 0755); err != nil && !os.IsExist(err) {
-			log.Fatalf("failed to create dir %q: %v", dir, err)
-			continue
-		}
+		go func() {
+			defer wg.Done()
 
-		// Create the output file.
-		name := path.Join(dir, "index.html")
-		f, err := os.Create(name)
-		if err != nil {
-			log.Fatalf("failed to create output file: %v", err)
-			continue
-		}
+			// Create the output directory.
+			dir := path.Join(rootPath, post.Date.Format("2006/01/02"), slug.Make(post.Title))
+			if err := os.MkdirAll(dir, 0755); err != nil && os.IsNotExist(err) {
+				log.Fatalf("failed to create dir %q: %v", dir, err)
+				return
+			}
 
-		// Create an unsafe component containing raw HTML.
-		content := postTempl.Unsafe(string(post.Content))
+			// Create the output file.
+			name := path.Join(dir, "index.html")
+			f, err := os.Create(name)
+			if err != nil {
+				log.Fatalf("failed to create output file: %v", err)
+				return
+			}
 
-		// Use templ to render the template containing the raw HTML.
-		err = postTempl.View(post, content).Render(context.Background(), f)
-		if err != nil {
-			log.Fatalf("failed to write output file: %v", err)
-			continue
-		}
+			// Create an unsafe component containing raw HTML.
+			content := postTempl.Unsafe(string(post.Content))
 
+			// Use templ to render the template containing the raw HTML.
+			err = postTempl.View(post, content).Render(context.Background(), f)
+			if err != nil {
+				log.Fatalf("failed to write output file: %v", err)
+				return
+			}
+		}()
+
+		// note failure to render will still generate tag ref
 		for _, tag := range post.Tags {
 			tags[tag] = append(tags[tag], post)
 		}
 	}
+	wg.Wait()
 
+	wg.Add(len(tags))
 	// Create a page for each tag.
 	tagKeys := make([]string, 0, len(tags))
 	for tag, posts := range tags {
-		slug := slug.Make(tag)
-
-		// Create the output directory.
-		dir := path.Join(rootPath, "tag", slug)
-		if err := os.MkdirAll(dir, 0755); err != nil && !os.IsExist(err) {
-			log.Fatalf("failed to create dir %q: %v", dir, err)
-			continue
-		}
-
-		// Create the output file.
-		name := path.Join(dir, "index.html")
-		f, err := os.Create(name)
-		if err != nil {
-			log.Fatalf("failed to create output file: %v", err)
-			continue
-		}
-
-		// Use templ to render the template containing the raw HTML.
-		err = tagTempl.View(tag, posts).Render(context.Background(), f)
-		if err != nil {
-			log.Fatalf("failed to write output file: %v", err)
-			continue
-		}
-
 		tagKeys = append(tagKeys, tag)
+
+		go func() {
+			defer wg.Done()
+
+			slug := slug.Make(tag)
+
+			// Create the output directory.
+			dir := path.Join(rootPath, "tag", slug)
+			if err := os.MkdirAll(dir, 0755); err != nil && os.IsNotExist(err) {
+				log.Fatalf("failed to create dir %q: %v", dir, err)
+				return
+			}
+
+			// Create the output file.
+			name := path.Join(dir, "index.html")
+			f, err := os.Create(name)
+			if err != nil {
+				log.Fatalf("failed to create output file: %v", err)
+				return
+			}
+
+			// Use templ to render the template containing the raw HTML.
+			err = tagTempl.View(tag, posts).Render(context.Background(), f)
+			if err != nil {
+				log.Fatalf("failed to write output file: %v", err)
+				return
+			}
+		}()
 	}
+
+	wg.Wait()
 
 	// Create an index page.
 	name := path.Join(rootPath, "index.html")

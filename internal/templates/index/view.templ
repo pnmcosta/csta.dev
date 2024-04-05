@@ -4,7 +4,7 @@ import "github.com/pnmcosta/csta.dev/internal/posts"
 import "github.com/pnmcosta/csta.dev/internal/templates/layout"
 import "github.com/pnmcosta/csta.dev/internal/templates/post"
 
-templ View(posts []posts.Post, tags []string) {
+templ View(posts []*posts.Post, tags []string) {
 	@layout.Base() {
 		<p>
 			Olá, I'm <a href="https://www.linkedin.com/in/pnmcosta/" target="_blank">Pedro Maia Costa</a> a product

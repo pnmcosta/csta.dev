@@ -23,7 +23,7 @@ assets: clean
 	@cp -a assets/. ./public/
 
 generate: ## Go and Templ generate
-	@npx tailwindcss -i style.css -o ./public/style.css
+	@npx tailwindcss -i style.css -o ./public/style.css --minify
 	@templ generate
 	
 run: ## run and watch

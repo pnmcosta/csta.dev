@@ -2,10 +2,9 @@ package index
 
 import "github.com/pnmcosta/csta.dev/internal/posts"
 import "github.com/pnmcosta/csta.dev/internal/templates/layout"
-import "path"
-import "github.com/gosimple/slug"
+import "github.com/pnmcosta/csta.dev/internal/templates/post"
 
-templ View(posts []posts.Post) {
+templ View(posts []posts.Post, tags []string) {
 	@layout.Base() {
 		<p>
 			Olá, I'm <a href="https://www.linkedin.com/in/pnmcosta/" target="_blank">Pedro Maia Costa</a> a product
@@ -32,11 +31,11 @@ templ View(posts []posts.Post) {
 		if len(posts) > 0 {
 			<p>I've also recently started sharing my experience and know-how on these blog articles:</p>
 			<p>
-				for i, post := range posts {
+				for i, p := range posts {
 					if i >0 {
 						;
 					}
-					<a href={ templ.SafeURL(path.Join(post.Date.Format("2006/01/02"), slug.Make(post.Title), "/")) }>{ post.Title } ({ post.Date.Format("2006/01/02") })</a>
+					@post.Link(p)
 				}
 			</p>
 		}

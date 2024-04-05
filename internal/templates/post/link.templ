@@ -1,0 +1,9 @@
+package post
+
+import "github.com/pnmcosta/csta.dev/internal/posts"
+import "path"
+import "github.com/gosimple/slug"
+
+templ Link(post posts.Post) {
+	<a href={ templ.SafeURL(path.Join("/", post.Date.Format("2006/01/02"), slug.Make(post.Title), "/")) }>{ post.Title } ({ post.Date.Format("2006/01/02") })</a>
+}

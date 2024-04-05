@@ -24,15 +24,13 @@ templ Base() {
 		</head>
 		<body class="bg-black font-mono">
 			<div class="container md:w-2/3 lg:w-3/5 xl:w-1/2 space-y-3 p-4 sm:p-6 lg:p-8 mb-8 sm:mb-4 text-lg sm:text-xl lg:text-2xl text-stone-300">
-				<h1 class="text-6xl lg:text-8xl pb-4 sm:pb-6 lg:pb-8 font-bold text-nowrap" id="title">
-					<a href="/">
-						<span class="visible">csta.dev</span>
-						<span>&lt;csta&#x2F;&gt;</span>
-						<span>&amp;csta{  }</span>
-						<span>#csta</span>
-						<span>()=>csta</span>
-					</a>
-				</h1>
+				<a href="/" id="title" class="text-6xl lg:text-8xl pb-4 sm:pb-6 lg:pb-8 font-bold text-nowrap">
+					<span class="visible">csta.dev</span>
+					<span>&lt;csta&#x2F;&gt;</span>
+					<span >&amp;csta&#123;&#125;</span>
+					<span>#csta</span>
+					<span >()=>&#123;csta&#125;</span>
+				</a>
 				{ children... }
 			</div>
 			<div class="clouds">
@@ -41,8 +39,8 @@ templ Base() {
 				<div class="clouds-3"></div>
 			</div>
 			<script>
-				const titleEls = document.querySelectorAll("#title > a > span")
-				const visibleEl = document.querySelector("#title > a > span.visible")
+				const titleEls = document.querySelectorAll("#title > span")
+				const visibleEl = document.querySelector("#title > span.visible")
 				let visible = Array.prototype.indexOf.call(visibleEl.parentNode.children, visibleEl);
 				setInterval(() => {
 					if (visible < titleEls.length - 1) {

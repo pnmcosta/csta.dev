@@ -17,7 +17,6 @@
         background: linear-gradient(#000000, #111111);
     }
 
-    h1,
     a {
         @apply text-white;
         transition: color .2s ease-in-out 0s;
@@ -27,13 +26,11 @@
         @apply text-zinc-400;
     }
 
-    h1 {
+    #title {
         overflow: hidden;
         padding-bottom: 2px;
-    }
-
-    #title {
-        margin-left: -6px;
+        margin-left: -4px;
+        display: block;
     }
 
     #title span {

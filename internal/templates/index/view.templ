@@ -14,16 +14,16 @@ var (
 templ View(posts []*posts.Post, tags []string) {
 	@layout.Base() {
 		<p>
-			Olá, I'm <a href="https://www.linkedin.com/in/pnmcosta/" target="_blank">Pedro Maia Costa</a> a product
-			software
-			engineer based in Braga, Portugal.
+			Olá! Welcome to my portfolio site. 
+			I'm <a href="https://www.linkedin.com/in/pnmcosta/" target="_blank">Pedro Maia Costa</a> a product software engineer based in Braga, Portugal.
 		</p>
 		<p>
-			Currently working on/with <a href="https://www.socialclique.app/" target="_blank">SocialClique</a> developing
-			<a href="https://shopify.dev/building-for-the-app-store" target="_blank">Shopify Apps</a>.
+			I'm currently immersed in the world of <a href="https://shopify.dev/building-for-the-app-store" target="_blank">Shopify Apps</a>
+			at <a href="https://www.socialclique.app/" target="_blank">SocialClique</a>, where I'm dedicated to developing innovative solutions that elevate the e-commerce 
+			experience for both stores and customers alike.
 		</p>
 		<p>
-			Having previously worked at/with <a href="https://www.juni.co/" target="_blank">Juni</a>, <a
+			In the past, I've had the privilege of contributing my skills and expertise to organizations such as <a href="https://www.juni.co/" target="_blank">Juni</a>, <a
 	href="https://www.thesimgrid.com/"
 	target="_blank"
 >The SimGrid</a>, 
@@ -33,36 +33,35 @@ templ View(posts []*posts.Post, tags []string) {
 			>
 				JPMorgan
 				Chase & Co.
-			</a> and <a href="https://allhuman.com/" target="_blank">All human</a>.
+			</a> and <a href="https://www.linkedin.com/in/pnmcosta/#experience" target="_blank">many others</a>.
 		</p>
 		if len(tags) > 0 {
 			<p>
-				I've also recently started sharing my expertise and know-how on these topics
-				for i, t := range tags {
+				Recently, I've embarked on a journey of knowledge sharing, delving into various topics including 
+				for i, t := range limit(tags, 5) {
 					if i >0 {
 						,
 					}
 					@tag.Link(t)
-				}
-				.
-			</p>
-		}
-		if len(posts) > 0 {
-			<p>
-				I've also recently started sharing my expertise and know-how on these topics
-				for i, t := range posts {
-					if i >0 {
-						,
-					}
-					@post.Link(t)
-				}
-				.
+				}&nbsp;and <a href="/posts">more</a>.
 			</p>
 		}
 		<p>
-			Source code of this site on <a href="https://github.com/pnmcosta/csta.dev" target="_blank">GitHub</a> and you email me on 
+			If you're interested in exploring the source code of this site, it's available on <a href="https://github.com/pnmcosta/csta.dev" target="_blank">GitHub</a>. 
+			Feel free to explore and learn from it. 
+		</p>
+		<p>
+			And should you wish to connect with me for collaboration, opportunities, or simply to say hello, you can reach me at 
 			@post.Unsafe(mailLink)
+			.
 		</p>
 		<p>All the best</p>
 	}
+}
+
+func limit(tags []string, value int) []string {
+	if len(tags) > value {
+		return tags[:value]
+	}
+	return tags
 }

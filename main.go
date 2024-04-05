@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"os"
 	"path"
+	"sort"
 	"sync"
 
 	"github.com/gosimple/slug"
@@ -107,6 +108,9 @@ func main() {
 			}
 		}()
 	}
+
+	// sort tag keys by post count descending
+	sort.Slice(tagKeys, func(i, j int) bool { return len(tags[tagKeys[i]]) > len(tags[tagKeys[j]]) })
 
 	wg.Wait()
 

@@ -1,0 +1,8 @@
+package tag
+
+import "path"
+import "github.com/gosimple/slug"
+
+templ Link(tag string) {
+	<a href={ templ.SafeURL(path.Join("/", "tag", slug.Make(tag), "/")) }>{ tag }</a>
+}

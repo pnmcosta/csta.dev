@@ -3,7 +3,21 @@ package post
 import "github.com/pnmcosta/csta.dev/internal/posts"
 import "path"
 import "github.com/gosimple/slug"
+import "time"
+import "fmt"
+import "math"
 
 templ Link(post *posts.Post) {
-	<a href={ templ.SafeURL(path.Join("/", post.Date.Format("2006/01/02"), slug.Make(post.Title), "/")) }>{ post.Title } ({ post.Date.Format("2006/01/02") })</a>
+	<a href={ templ.SafeURL(path.Join("/", post.Date.Format("2006/01/02"), slug.Make(post.Title), "/")) }>{ post.Title }</a>
+	<span class="text-base">{ DaysSince(post.Date) }</span>
+}
+
+func DaysSince(dur time.Time) string {
+	days := math.Floor(time.Now().UTC().
+		Sub(dur.UTC()).
+		Hours() / 24)
+	if days > 0 {
+		return fmt.Sprintf("%v days ago", days)
+	}
+	return "today"
 }

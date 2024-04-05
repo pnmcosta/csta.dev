@@ -4,9 +4,10 @@ import "github.com/pnmcosta/csta.dev/internal/posts"
 import "github.com/pnmcosta/csta.dev/internal/templates/layout"
 import "github.com/pnmcosta/csta.dev/internal/templates/post"
 import "fmt"
+import "github.com/pnmcosta/csta.dev/internal/templates/tag"
 
 var (
-	mail = "&#112;&#101;&#100;&#114;&#111;&#064;&#099;&#115;&#116;&#097;&#046;&#100;&#101;&#118;"
+	mail     = "&#112;&#101;&#100;&#114;&#111;&#064;&#099;&#115;&#116;&#097;&#046;&#100;&#101;&#118;"
 	mailLink = fmt.Sprintf(`<a href="mailto:%s">%s</a>`, mail, mail)
 )
 
@@ -34,19 +35,32 @@ templ View(posts []*posts.Post, tags []string) {
 				Chase & Co.
 			</a> and <a href="https://allhuman.com/" target="_blank">All human</a>.
 		</p>
-		if len(posts) > 0 {
-			<p>I've also recently started sharing my experience and know-how on these blog articles:</p>
+		if len(tags) > 0 {
 			<p>
-				for i, p := range posts {
+				I've also recently started sharing my expertise and know-how on these topics
+				for i, t := range tags {
 					if i >0 {
-						;
+						,
 					}
-					@post.Link(p)
+					@tag.Link(t)
 				}
+				.
+			</p>
+		}
+		if len(posts) > 0 {
+			<p>
+				I've also recently started sharing my expertise and know-how on these topics
+				for i, t := range posts {
+					if i >0 {
+						,
+					}
+					@post.Link(t)
+				}
+				.
 			</p>
 		}
 		<p>
-			Source code of this site on <a href="https://github.com/pnmcosta/csta.dev" target="_blank">GitHub</a> and you can drop me a comment to 
+			Source code of this site on <a href="https://github.com/pnmcosta/csta.dev" target="_blank">GitHub</a> and you email me on 
 			@post.Unsafe(mailLink)
 		</p>
 		<p>All the best</p>

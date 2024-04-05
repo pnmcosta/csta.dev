@@ -7,15 +7,14 @@ import "github.com/pnmcosta/csta.dev/internal/templates/post"
 templ View(tag string, posts []*posts.Post) {
 	@layout.Base() {
 		if len(posts) > 0 {
-			<h1>{ tag } Posts</h1>
-			<p>
-				for i, p := range posts {
-					if i >0 {
-						;
-					}
-					@post.Link(p)
+			<h1 class="text-xl">Posts tagged "{ tag }"</h1>
+			<ul class="list-disc list-inside">
+				for _, p := range posts {
+					<li>
+							@post.Link(p)
+					</li>
 				}
-			</p>
+			</ul>
 		}
 	}
 }

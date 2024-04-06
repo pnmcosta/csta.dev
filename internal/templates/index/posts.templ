@@ -1,0 +1,21 @@
+package index
+
+import "github.com/pnmcosta/csta.dev/internal/posts"
+import "github.com/pnmcosta/csta.dev/internal/templates/layout"
+import "github.com/pnmcosta/csta.dev/internal/templates/post"
+
+templ Posts(posts []*posts.Post) {
+	@layout.Base() {
+		<h1 class="text-xl">Recent posts</h1>
+		<ul class="list-disc">
+			for _, p := range posts {
+				<li>
+					@post.LinkWithTags(p)
+				</li>
+			}
+		</ul>
+		<p>
+			<a href="/">Back</a>
+		</p>
+	}
+}

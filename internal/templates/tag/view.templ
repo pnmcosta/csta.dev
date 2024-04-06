@@ -8,13 +8,16 @@ templ View(tag string, posts []*posts.Post) {
 	@layout.Base() {
 		if len(posts) > 0 {
 			<h1 class="text-xl">Posts tagged "{ tag }"</h1>
-			<ul class="list-disc list-inside">
+			<ul class="list-disc">
 				for _, p := range posts {
 					<li>
-							@post.Link(p)
+						@post.Link(p)
 					</li>
 				}
 			</ul>
 		}
+		<p>
+			<a href="/">Back</a>
+		</p>
 	}
 }

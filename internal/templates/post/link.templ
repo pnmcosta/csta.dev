@@ -12,6 +12,17 @@ templ Link(post *posts.Post) {
 	<span class="text-base">{ DaysSince(post.Date) }</span>
 }
 
+templ LinkWithTags(post *posts.Post) {
+	@Link(post)
+	&nbsp;<span class="text-base">in</span>
+	for i, t := range post.Tags {
+		if i >0 {
+			,
+		}
+		<a href={ templ.SafeURL(path.Join("/", "tag", slug.Make(t), "/")) } class="text-base">{ t }</a>
+	}
+}
+
 func DaysSince(dur time.Time) string {
 	days := math.Floor(time.Now().UTC().
 		Sub(dur.UTC()).

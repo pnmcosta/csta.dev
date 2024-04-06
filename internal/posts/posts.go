@@ -114,7 +114,6 @@ func (w *walker) walk(s string, d fs.DirEntry, err error) error {
 			post.Date = time.Now().UTC()
 		}
 
-		log.Printf("%s: post parsed\n", s)
 		w.posts = append(w.posts, &post)
 	}
 	return nil

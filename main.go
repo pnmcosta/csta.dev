@@ -9,6 +9,7 @@ import (
 	"path"
 	"sort"
 	"sync"
+	"time"
 
 	"github.com/gosimple/slug"
 	"github.com/pnmcosta/csta.dev/internal/posts"
@@ -22,6 +23,7 @@ type Post = posts.Post
 var devFlag = flag.Bool("dev", false, "if true public folder will be served")
 
 func main() {
+	start := time.Now().UTC()
 	flag.Parse()
 
 	posts := posts.ParsePosts()
@@ -29,7 +31,7 @@ func main() {
 	// Output path.
 	rootPath := "public"
 	if err := os.Mkdir(rootPath, 0755); err != nil && os.IsNotExist(err) {
-		log.Fatalf("failed to create output directory: %v", err)
+		log.Fatalf("failed to create %q: %v", rootPath, err)
 	}
 
 	tags := map[string][]*Post{}
@@ -44,7 +46,7 @@ func main() {
 			// Create the output directory.
 			dir := path.Join(rootPath, post.Date.Format("2006/01/02"), slug.Make(post.Title))
 			if err := os.MkdirAll(dir, 0755); err != nil && os.IsNotExist(err) {
-				log.Fatalf("failed to create dir %q: %v", dir, err)
+				log.Printf("failed to create %q: %v\n", dir, err)
 				return
 			}
 
@@ -52,7 +54,7 @@ func main() {
 			name := path.Join(dir, "index.html")
 			f, err := os.Create(name)
 			if err != nil {
-				log.Fatalf("failed to create output file: %v", err)
+				log.Printf("failed to create %q: %v\n", name, err)
 				return
 			}
 
@@ -62,9 +64,11 @@ func main() {
 			// Use templ to render the template containing the raw HTML.
 			err = postTempl.View(post, content).Render(context.Background(), f)
 			if err != nil {
-				log.Fatalf("failed to write output file: %v", err)
+				log.Printf("failed to write %q: %v\n", name, err)
 				return
 			}
+
+			log.Printf("%s created", name)
 		}()
 
 		// note failure to render will still generate tag ref
@@ -88,7 +92,7 @@ func main() {
 			// Create the output directory.
 			dir := path.Join(rootPath, "tag", slug)
 			if err := os.MkdirAll(dir, 0755); err != nil && os.IsNotExist(err) {
-				log.Fatalf("failed to create dir %q: %v", dir, err)
+				log.Printf("failed to create %q: %v\n", dir, err)
 				return
 			}
 
@@ -96,16 +100,18 @@ func main() {
 			name := path.Join(dir, "index.html")
 			f, err := os.Create(name)
 			if err != nil {
-				log.Fatalf("failed to create output file: %v", err)
+				log.Printf("failed to create %q: %v\n", name, err)
 				return
 			}
 
 			// Use templ to render the template containing the raw HTML.
 			err = tagTempl.View(tag, posts).Render(context.Background(), f)
 			if err != nil {
-				log.Fatalf("failed to write output file: %v", err)
+				log.Printf("failed to write %q: %v\n", name, err)
 				return
 			}
+
+			log.Printf("%s created", name)
 		}()
 	}
 
@@ -115,17 +121,55 @@ func main() {
 	wg.Wait()
 
 	// Create an index page.
-	name := path.Join(rootPath, "index.html")
-	f, err := os.Create(name)
-	if err != nil {
-		log.Fatalf("failed to create output file: %v", err)
-	}
+	wg.Add(1)
+	go func() {
+		defer wg.Done()
+		name := path.Join(rootPath, "index.html")
+		f, err := os.Create(name)
+		if err != nil {
+			log.Printf("failed to create %q: %v\n", name, err)
+			return
+		}
 
-	// Write it out.
-	err = index.View(posts, tagKeys).Render(context.Background(), f)
-	if err != nil {
-		log.Fatalf("failed to write index page: %v", err)
-	}
+		// Write it out.
+		err = index.View(posts, tagKeys).Render(context.Background(), f)
+		if err != nil {
+			log.Printf("failed to write %q: %v\n", name, err)
+			return
+		}
+
+		log.Printf("%s created", name)
+	}()
+
+	// Create a posts page.
+	wg.Add(1)
+	go func() {
+		defer wg.Done()
+
+		if len(posts) == 0 {
+			return
+		}
+
+		name := path.Join(rootPath, "posts.html")
+		f, err := os.Create(name)
+		if err != nil {
+			log.Printf("failed to create %q: %v\n", name, err)
+			return
+		}
+
+		// Write it out.
+		err = index.Posts(posts).Render(context.Background(), f)
+		if err != nil {
+			log.Printf("failed to write %q: %v\n", name, err)
+			return
+		}
+
+		log.Printf("%s created", name)
+	}()
+
+	wg.Wait()
+
+	log.Printf("took %dms\n", time.Now().UTC().Sub(start).Milliseconds())
 
 	if !*devFlag {
 		return
@@ -133,9 +177,8 @@ func main() {
 
 	// Static serve only on dev
 	http.Handle("/", http.FileServer(http.Dir("./public")))
-	log.Println("Listening on 127.0.0.1:3000")
-	err = http.ListenAndServe("127.0.0.1:3000", nil)
-	if err != nil {
+	log.Println("Listening on http://127.0.0.1:3000")
+	if err := http.ListenAndServe("127.0.0.1:3000", nil); err != nil {
 		log.Fatal(err)
 	}
 }

@@ -1,61 +1,50 @@
 package index
 
-import "github.com/pnmcosta/csta.dev/internal/posts"
-import "github.com/pnmcosta/csta.dev/internal/templates/layout"
-import "github.com/pnmcosta/csta.dev/internal/templates/post"
-import "fmt"
-import "github.com/pnmcosta/csta.dev/internal/templates/tag"
-
-var (
-	mail     = "&#112;&#101;&#100;&#114;&#111;&#064;&#099;&#115;&#116;&#097;&#046;&#100;&#101;&#118;"
-	mailLink = fmt.Sprintf(`<a href="mailto:%s">%s</a>`, mail, mail)
+import (
+	"github.com/pnmcosta/csta.dev/internal/models"
+	"github.com/pnmcosta/csta.dev/internal/templates/layout"
+	"github.com/pnmcosta/csta.dev/internal/templates/tag"
 )
 
-templ View(posts []*posts.Post, tags []string) {
+templ View(posts []*models.Post, tags []string) {
 	@layout.Base() {
 		<p>
-			Olá! Welcome to my portfolio site. 
-			I'm <a href="https://www.linkedin.com/in/pnmcosta/" target="_blank">Pedro Maia Costa</a> a product software engineer based in Braga, Portugal.
+			Olá, 
 		</p>
 		<p>
-			I'm currently immersed in the world of <a href="https://shopify.dev/building-for-the-app-store" target="_blank">Shopify Apps</a>
-			at <a href="https://www.socialclique.app/" target="_blank">SocialClique</a>, where I'm dedicated to developing innovative solutions that elevate the e-commerce 
-			experience for both stores and customers alike.
+			I'm <a href="https://www.linkedin.com/in/pnmcosta/" target="_blank">Pedro Maia Costa</a> a software engineer based in Braga, Portugal.
 		</p>
 		<p>
-			In the past, I've had the privilege of contributing my skills and expertise to organizations such as <a href="https://www.juni.co/" target="_blank">Juni</a>, <a
-	href="https://www.thesimgrid.com/"
-	target="_blank"
->The SimGrid</a>, 
-			<a
-				href="http://www.jpmorganchase.com"
-				target="_blank"
-			>
-				JPMorgan
-				Chase & Co.
-			</a> and <a href="https://www.linkedin.com/in/pnmcosta/#experience" target="_blank">many others</a>.
+			I'm currently building <a href="https://apps.shopify.com/socialclique" target="_blank">SocialClique</a> an innovative app on Shopify that aims to help e-commerce stores with their customer retention and advocacy on Instagram.
+		</p>
+		<p>
+			Over the years, I have contributed with my web development and programming skills to many organizations such as <a href="https://www.juni.co/" target="_blank">Juni</a>, 
+			<a href="https://www.thesimgrid.com/" target="_blank">The SimGrid</a>, <a href="http://www.jpmorganchase.com" target="_blank">JPMorgan Chase</a>
+			and <a href="https://www.linkedin.com/in/pnmcosta/#experience" target="_blank">others</a>.
 		</p>
 		if len(tags) > 0 {
 			<p>
-				Recently, I've embarked on a journey of knowledge sharing, delving into various topics including 
-				for i, t := range limit(tags, 5) {
+				I like sharing my thoughts and practical examples on topics like
+				for i, t := range limit(tags, 6) {
 					if i >0 {
 						,
 					}
 					@tag.Link(t)
-				}&nbsp;and <a href="/posts.html">more</a>.
+				}
+				&nbsp;and <a href="/posts.html">others</a>.
 			</p>
-		}
+		} 
 		<p>
-			If you're interested in the source code of this site, it's available on <a href="https://github.com/pnmcosta/csta.dev" target="_blank">GitHub</a>. 
-			Feel free to explore and learn from it. 
+			Outside of programming, I love traveling and take every opportunity to explore new places and cultures to broaden my horizon. As a motorsports enthusiast - and long time McLaren fan - I never miss Formula 1, Endurance and local racing events.
 		</p>
 		<p>
-			And should you wish to connect with me for collaboration, opportunities, or simply to say hello, you can reach me at 
-			@post.Unsafe(mailLink)
-			.
+			I'm also an avid gamer, I sim race on Assetto Corsa Competizione for its realistic experience and play tactical military simulations like ArmA as part of a unit with friends.
 		</p>
-		<p>All the best</p>
+		<p>
+			Feel free to reach out, we could have a chat over a coffee or arrange a work collaboration. You can find me on 
+			<a href="https://www.linkedin.com/in/pnmcosta/" target="_blank">LinkedIn</a>, <a href="https://github.com/pnmcosta/" target="_blank">GitHub</a>, <a href="https://ig.me/costadelpedro/" target="_blank">Instagram</a>, <a href="https://www.twitch.tv/bracarisr" target="_blank">Twitch</a> or email at
+			<span class="text-white font-semibold whitespace-nowrap">pedro<span class="inline-block align-text-bottom"><svg class="h-5 w-5" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"></path> <circle cx="12" cy="12" r="4"></circle> <path d="M16 12v1.5a2.5 2.5 0 0 0 5 0v-1.5a9 9 0 1 0 -5.5 8.28"></path></svg></span>csta.dev</span>.
+		</p>
 	}
 }
 

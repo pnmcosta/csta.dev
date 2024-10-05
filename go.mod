@@ -1,11 +1,11 @@
 module github.com/pnmcosta/csta.dev
 
-go 1.22
+go 1.23
 
 require (
-	github.com/a-h/templ v0.2.648
+	github.com/a-h/templ v0.2.778
 	github.com/gosimple/slug v1.14.0
-	github.com/yuin/goldmark v1.7.1
+	github.com/yuin/goldmark v1.7.4
 	github.com/yuin/goldmark-meta v1.1.0
 )
 

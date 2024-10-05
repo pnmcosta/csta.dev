@@ -1,10 +1,10 @@
 package tag
 
-import "github.com/pnmcosta/csta.dev/internal/posts"
+import "github.com/pnmcosta/csta.dev/internal/models"
 import "github.com/pnmcosta/csta.dev/internal/templates/layout"
 import "github.com/pnmcosta/csta.dev/internal/templates/post"
 
-templ View(tag string, posts []*posts.Post) {
+templ View(tag string, posts []*models.Post) {
 	@layout.Base() {
 		if len(posts) > 0 {
 			<h1 class="text-xl">Posts tagged "{ tag }"</h1>

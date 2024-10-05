@@ -1,4 +1,4 @@
-package posts
+package utils
 
 import (
 	"bytes"
@@ -10,24 +10,17 @@ import (
 	"strings"
 	"time"
 
+	"github.com/pnmcosta/csta.dev/internal/models"
 	"github.com/yuin/goldmark"
 	meta "github.com/yuin/goldmark-meta"
 	"github.com/yuin/goldmark/parser"
 )
 
-type Post struct {
-	Title   string
-	Summary string
-	Tags    []string
-	Date    time.Time
-	Content []byte
-}
-
 type walker struct {
-	posts []*Post
+	posts []*models.Post
 }
 
-func ParsePosts() []*Post {
+func ParsePosts() []*models.Post {
 	w := walker{}
 	filepath.WalkDir("./posts", w.walk)
 	// stort by latest
@@ -70,7 +63,7 @@ func (w *walker) walk(s string, d fs.DirEntry, err error) error {
 			return nil
 		}
 
-		post := Post{
+		post := models.Post{
 			Content: parsed,
 		}
 

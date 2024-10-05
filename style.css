@@ -54,15 +54,13 @@
         position: absolute;
         bottom: -25%;
         left: -25%;
-        animation: 242s  ease-in-out 0s normal none infinite moon-move;
+        animation: 242s ease-in-out 0s normal none infinite moon-move;
         z-index: -5;
     }
 
     @keyframes moon-move {
         0% {
-            transform: rotate(20deg)
-            translate(-80.5px)
-            ;
+            transform: rotate(20deg) translate(-80.5px);
             opacity: 0;
         }
 
@@ -73,11 +71,9 @@
         }
 
         100% {
-            transform: rotate(380deg)
-            translate(-80.5px)
-            ;
+            transform: rotate(380deg) translate(-80.5px);
             opacity: 0;
-            bottom:-50%;
+            bottom: -50%;
         }
     }
 

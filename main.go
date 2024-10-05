@@ -12,13 +12,12 @@ import (
 	"time"
 
 	"github.com/gosimple/slug"
-	"github.com/pnmcosta/csta.dev/internal/posts"
+	"github.com/pnmcosta/csta.dev/internal/models"
 	"github.com/pnmcosta/csta.dev/internal/templates/index"
 	postTempl "github.com/pnmcosta/csta.dev/internal/templates/post"
 	tagTempl "github.com/pnmcosta/csta.dev/internal/templates/tag"
+	"github.com/pnmcosta/csta.dev/internal/utils"
 )
-
-type Post = posts.Post
 
 var devFlag = flag.Bool("dev", false, "if true public folder will be served")
 
@@ -26,7 +25,7 @@ func main() {
 	start := time.Now().UTC()
 	flag.Parse()
 
-	posts := posts.ParsePosts()
+	posts := utils.ParsePosts()
 
 	// Output path.
 	rootPath := "public"
@@ -34,7 +33,7 @@ func main() {
 		log.Fatalf("failed to create %q: %v", rootPath, err)
 	}
 
-	tags := map[string][]*Post{}
+	tags := map[string][]*models.Post{}
 
 	var wg sync.WaitGroup
 	wg.Add(len(posts))
@@ -59,7 +58,7 @@ func main() {
 			}
 
 			// Create an unsafe component containing raw HTML.
-			content := postTempl.Unsafe(string(post.Content))
+			content := utils.Unsafe(string(post.Content))
 
 			// Use templ to render the template containing the raw HTML.
 			err = postTempl.View(post, content).Render(context.Background(), f)
